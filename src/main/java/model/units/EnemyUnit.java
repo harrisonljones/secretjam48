@@ -49,7 +49,7 @@ public class EnemyUnit extends AbstractUnit {
     @Override
     protected PVector getNextVel() {
 
-        if (!this.getHitbox().isCollision(playerUnit.getHitbox())) {
+        if (!this.getImageHitbox().isCollision(playerUnit.getImageHitbox())) {
             seekObject(playerUnit);
         }
         return super.getNextVel();

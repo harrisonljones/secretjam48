@@ -25,11 +25,11 @@ public class Scene {
         player.updateVelocity();
         player.updateImage();
 
-        Rect nextRectX = player.getHitbox().getAddX(player.getVelocity().x);
-        Rect nextRectY = player.getHitbox().getAddY(player.getVelocity().y);
+        Rect nextRectX = player.getImageHitbox().getAddX(player.getVelocity().x);
+        Rect nextRectY = player.getImageHitbox().getAddY(player.getVelocity().y);
 
         for (StaticEnvironmentObject object : staticEnvironmentObjects) {
-            if (object.getHitbox().isCollision(nextRectX)) {
+            if (object.getImageHitbox().isCollision(nextRectX)) {
                 allignWithObject(player, object.getHitbox(), true);
                 player.getVelocity().x = 0;
                 break;
@@ -37,7 +37,7 @@ public class Scene {
         }
 
         for (StaticEnvironmentObject object : staticEnvironmentObjects) {
-            if (object.getHitbox().isCollision(nextRectY)) {
+            if (object.getImageHitbox().isCollision(nextRectY)) {
                 allignWithObject(player, object.getHitbox(), false);
                 player.land();
                 break;
@@ -48,27 +48,27 @@ public class Scene {
 
         for (EnemyUnit unit : enemyUnits) {
             unit.updateVelocity();
-            unit.updateImage();
-            nextRectX = unit.getHitbox().getAddX(unit.getVelocity().x);
-            nextRectY = unit.getHitbox().getAddY(unit.getVelocity().y);
+            nextRectX = unit.getImageHitbox().getAddX(unit.getVelocity().x);
+            nextRectY = unit.getImageHitbox().getAddY(unit.getVelocity().y);
 
             for (StaticEnvironmentObject object : staticEnvironmentObjects) {
-                if (object.getHitbox().isCollision(nextRectX)) {
-                    allignWithObject(unit, object.getHitbox(), true);
+                if (object.getImageHitbox().isCollision(nextRectX)) {
+                    allignWithObject(unit, object.getImageHitbox(), true);
                     unit.getVelocity().x = 0;
                     break;
                 }
             }
 
             for (StaticEnvironmentObject object : staticEnvironmentObjects) {
-                if (object.getHitbox().isCollision(nextRectY)) {
-                    allignWithObject(unit, object.getHitbox(), false);
+                if (object.getImageHitbox().isCollision(nextRectY)) {
+                    allignWithObject(unit, object.getImageHitbox(), false);
                     unit.getVelocity().y = 0;
                     break;
                 }
             }
 
             unit.updatePosition();
+            unit.updateImage();
         }
     }
 
@@ -76,7 +76,7 @@ public class Scene {
 
         if (allignX) {
             if (unit.isMovingRight()) {
-                unit.getPosition().x = hitbox.getTopLeftX() - (unit.getHitbox().getWidth());
+                unit.getPosition().x = hitbox.getTopLeftX() - (unit.getImageHitbox().getWidth());
             }
             else {
                 unit.getPosition().x = hitbox.getRightX();
@@ -87,7 +87,7 @@ public class Scene {
                 unit.getPosition().y = hitbox.getBottomY();
             }
             else {
-                unit.getPosition().y = hitbox.getTopLeftY() - (unit.getHitbox().getHeight());
+                unit.getPosition().y = hitbox.getTopLeftY() - (unit.getImageHitbox().getHeight());
             }
         }
 

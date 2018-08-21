@@ -8,7 +8,6 @@ import model.fsm.FSMAction;
 import model.fsm.FiniteStateMachine;
 import model.fsm.TimeFSMAction;
 import model.fsm.TimedFiniteStateMachine;
-import model.gameobjects.AbstractDrawable;
 import processing.core.PImage;
 import processing.core.PVector;
 
@@ -32,14 +31,15 @@ public class PlayerUnit extends AbstractUnit {
         super(position, playerImages.get(PlayerUnitImage.BOTH_FEET), maxHealth, strength, defence);
         this.imageIndex = PlayerUnitImage.BOTH_FEET;
         this.playerImages = playerImages;
+
         setupJumpingStateMachine();
+        setupAttackingStateMachine();
     }
 
     private static class PlayerUnitImage {
         private final static int LEFT_FOOT = 0;
         private final static int RIGHT_FOOT = 1;
         private final static int BOTH_FEET = 2;
-
     }
 
     public void updateImage() {
@@ -63,7 +63,6 @@ public class PlayerUnit extends AbstractUnit {
 
     public void attack() {
         attackingStateMachine.act(ACTION_ATTACK);
-
     }
 
     @Override

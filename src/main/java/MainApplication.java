@@ -11,6 +11,8 @@ import processing.core.PVector;
 
 public class MainApplication extends PApplet {
 
+    public static PApplet sketch;
+
     private boolean leftKeyDown;
     private boolean rightKeyDown;
 
@@ -29,6 +31,9 @@ public class MainApplication extends PApplet {
     }
 
     public void setup() {
+
+        this.sketch = this;
+
         BG_COL = color(255);
 
         environmentObjects = new ArrayList<>();
@@ -37,9 +42,9 @@ public class MainApplication extends PApplet {
         environmentObjects.add(new StaticEnvironmentObject(new PVector(980, 304), loadImage("images/gate.png")));
 
         List<PImage> playerImages = Arrays.asList(
-                loadImage("images/player_char_left_foot.png"),
-                loadImage("images/player_char_right_foot.png"),
-                loadImage("images/player_char_both_feet.png"));
+                loadImage("images/player_char_left_foot_sword_right.png"),
+                loadImage("images/player_char_right_foot_sword_left.png"),
+                loadImage("images/player_char_both_feet_sword_right.png"));
 
         playerUnit = new PlayerUnit(new PVector(150, 400), 100, 100, 100, playerImages);
 
