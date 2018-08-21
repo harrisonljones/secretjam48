@@ -8,7 +8,7 @@ import processing.core.PVector;
 
 @Getter
 @Setter
-public class DynamicObject extends GameObject {
+public abstract class DynamicObject extends GameObject {
 
     private static final PVector GRAVITY_FORCE = new PVector(0, .8f);
 
