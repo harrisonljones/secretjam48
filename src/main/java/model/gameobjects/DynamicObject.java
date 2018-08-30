@@ -15,10 +15,10 @@ public abstract class DynamicObject extends GameObject {
     protected PVector velocity;
     protected boolean affectedByGravity;
 
-    public DynamicObject(PVector position, PImage img) {
+    public DynamicObject(PVector position, PImage img, boolean affectedByGravity) {
         super(position, img);
         this.velocity = new PVector(0,0);
-        this.affectedByGravity = true;
+        this.affectedByGravity = affectedByGravity;
     }
 
     public boolean isMovingUp() {

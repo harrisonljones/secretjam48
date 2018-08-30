@@ -10,7 +10,7 @@ import processing.core.PVector;
 @Setter
 public class StaticEnvironmentObject extends GameObject {
 
-    private Rect hitbox;
+    protected Rect hitbox;
 
     public StaticEnvironmentObject(PVector position, PImage img) {
         super(position, img);

@@ -9,4 +9,6 @@ public abstract class DynamicEnvironmentObject extends GameObject {
         super(position, img);
     }
 
+    public abstract void update();
+
 }

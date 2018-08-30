@@ -41,4 +41,8 @@ public class Gate extends DynamicEnvironmentObject implements Moveable {
         }
     }
 
+    @Override
+    public void update() {
+
+    }
 }

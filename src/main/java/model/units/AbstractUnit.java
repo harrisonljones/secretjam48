@@ -16,7 +16,7 @@ abstract class AbstractUnit extends DynamicObject {
     private int defence;
 
     AbstractUnit(PVector position, PImage img, int maxHealth, int strength, int defence) {
-        super(position, img);
+        super(position, img, true);
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.strength = strength;
