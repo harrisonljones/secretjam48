@@ -3,6 +3,7 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import model.gameobjects.ForceApplying;
 import model.units.EnemyUnit;
 import model.units.PlayerUnit;
 import model.gameobjects.DynamicObject;
@@ -13,14 +14,16 @@ import processing.core.PApplet;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Scene {
+class Scene {
 
     private PlayerUnit player;
-    private List<StaticEnvironmentObject> staticEnvironmentObjects;
+    private List<StaticEnvironmentObject> interactiveEnvironmentObjects;
+    private List<StaticEnvironmentObject> decorativeEnvironmentObjects;
     private List<EnemyUnit> enemyUnits;
+    private List<ForceApplying> forceAppliers;
     private PApplet sketch;
 
-    public void update() {
+    void update() {
 
         player.updateVelocity();
         player.updateImage();
@@ -28,7 +31,7 @@ public class Scene {
         Rect nextRectX = player.getImageHitbox().getAddX(player.getVelocity().x);
         Rect nextRectY = player.getImageHitbox().getAddY(player.getVelocity().y);
 
-        for (StaticEnvironmentObject object : staticEnvironmentObjects) {
+        for (StaticEnvironmentObject object : interactiveEnvironmentObjects) {
             if (object.getImageHitbox().isCollision(nextRectX)) {
                 allignWithObject(player, object.getHitbox(), true);
                 player.getVelocity().x = 0;
@@ -36,7 +39,7 @@ public class Scene {
             }
         }
 
-        for (StaticEnvironmentObject object : staticEnvironmentObjects) {
+        for (StaticEnvironmentObject object : interactiveEnvironmentObjects) {
             if (object.getImageHitbox().isCollision(nextRectY)) {
                 allignWithObject(player, object.getHitbox(), false);
                 player.land();
@@ -51,7 +54,7 @@ public class Scene {
             nextRectX = unit.getImageHitbox().getAddX(unit.getVelocity().x);
             nextRectY = unit.getImageHitbox().getAddY(unit.getVelocity().y);
 
-            for (StaticEnvironmentObject object : staticEnvironmentObjects) {
+            for (StaticEnvironmentObject object : interactiveEnvironmentObjects) {
                 if (object.getImageHitbox().isCollision(nextRectX)) {
                     allignWithObject(unit, object.getImageHitbox(), true);
                     unit.getVelocity().x = 0;
@@ -59,7 +62,7 @@ public class Scene {
                 }
             }
 
-            for (StaticEnvironmentObject object : staticEnvironmentObjects) {
+            for (StaticEnvironmentObject object : interactiveEnvironmentObjects) {
                 if (object.getImageHitbox().isCollision(nextRectY)) {
                     allignWithObject(unit, object.getImageHitbox(), false);
                     unit.getVelocity().y = 0;
@@ -70,6 +73,11 @@ public class Scene {
             unit.updatePosition();
             unit.updateImage();
         }
+
+        for (ForceApplying forceApplying : forceAppliers) {
+            forceApplying.applyForce(player);
+        }
+
     }
 
     private static void allignWithObject(DynamicObject unit, Rect hitbox, boolean allignX) {
@@ -93,8 +101,9 @@ public class Scene {
 
     }
 
-    public void draw() {
-        staticEnvironmentObjects.forEach(object -> object.draw(sketch));
+    void draw() {
+        decorativeEnvironmentObjects.forEach(object -> object.draw(sketch));
+        interactiveEnvironmentObjects.forEach(object -> object.draw(sketch));
         enemyUnits.forEach(unit -> unit.draw(sketch));
         player.draw(sketch);
     }

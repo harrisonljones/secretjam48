@@ -2,9 +2,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import model.Water;
+import model.gameobjects.ForceApplying;
+import model.gameobjects.StaticEnvironmentObject;
 import model.units.EnemyUnit;
 import model.units.PlayerUnit;
-import model.gameobjects.StaticEnvironmentObject;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -38,32 +40,40 @@ public class MainApplication extends PApplet {
 
         environmentObjects = new ArrayList<>();
         environmentObjects.add(new StaticEnvironmentObject(new PVector(100, 600), loadImage("images/platform.png")));
-        environmentObjects.add(new StaticEnvironmentObject(new PVector(556, 552), loadImage("images/platform.png")));
-        environmentObjects.add(new StaticEnvironmentObject(new PVector(980, 304), loadImage("images/gate.png")));
-
+//        environmentObjects.add(new StaticEnvironmentObject(new PVector(556, 552), loadImage("images/platform.png")));
+//        environmentObjects.add(new StaticEnvironmentObject(new PVector(980, 304), loadImage("images/gate.png")));
+//
         List<PImage> playerImages = Arrays.asList(
-                loadImage("images/player_char_left_foot_sword_right.png"),
-                loadImage("images/player_char_right_foot_sword_left.png"),
-                loadImage("images/player_char_both_feet_sword_right.png"));
+                loadImage("images/player_char_left_foot.png"),
+                loadImage("images/player_char_right_foot.png"),
+                loadImage("images/player_char_both_feet.png"));
 
         playerUnit = new PlayerUnit(new PVector(150, 400), 100, 100, 100, playerImages);
-
-        List<PImage> enemyLeftImages = Arrays.asList(
-                loadImage("images/small_slime_left1.png"),
-                loadImage("images/small_slime_left2.png"),
-                loadImage("images/small_slime_left3.png"));
-
-        List<PImage> enemyRightImages = Arrays.asList(
-                loadImage("images/small_slime_right1.png"),
-                loadImage("images/small_slime_right2.png"),
-                loadImage("images/small_slime_right3.png"));
-
+//
+//        List<PImage> enemyLeftImages = Arrays.asList(
+//                loadImage("images/small_slime_left1.png"),
+//                loadImage("images/small_slime_left2.png"),
+//                loadImage("images/small_slime_left3.png"));
+//
+//        List<PImage> enemyRightImages = Arrays.asList(
+//                loadImage("images/small_slime_right1.png"),
+//                loadImage("images/small_slime_right2.png"),
+//                loadImage("images/small_slime_right3.png"));
+//
         enemyUnits = new ArrayList<>();
-        enemyUnits.add(new EnemyUnit(
-                new PVector(700, 200), 0, 0, 0, 0, enemyLeftImages, enemyRightImages, playerUnit
-        ));
+//        enemyUnits.add(new EnemyUnit(
+//                new PVector(700, 200), 0, 0, 0, 0, enemyLeftImages, enemyRightImages, playerUnit
+//        ));
 
-        scene = new Scene(playerUnit, environmentObjects, enemyUnits, this);
+        Water water = new Water(new PVector(556, 648), loadImage("images/water.png"));
+        List<ForceApplying> forceAppliers = Arrays.asList(
+                water
+        );
+        List<StaticEnvironmentObject> decorativeEnvironmentObjects = Arrays.asList(
+                water
+        );
+
+        scene = new Scene(playerUnit, environmentObjects, decorativeEnvironmentObjects, enemyUnits, forceAppliers, this);
 
         frameRate(60);
     }
